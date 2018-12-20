@@ -1,8 +1,6 @@
 # Penper
 This is a simple paper management tool.  
-<aside class="warning">
-This tool is incomplete.
-</aside>
+**This tool is incomplete.**
 
 ## Setup
 1. `$ sudo apt-get install python3 python3-pip`
