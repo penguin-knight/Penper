@@ -15,12 +15,13 @@
 	  <form method="post" action="/upload" enctype="multipart/form-data">
 	  File:
 	  <input type="file" name="paper">
+	  <input type="text" name="title">
 
 	  <button type="submit" class="btn btn-primary">Upload</button>
 	  </form>
-	  % if message!=None:
-	  <div class="alert alert-primary" role="alert">
-	  {{message}}
+	  % if alert!=None:
+	  <div class="alert alert-{{alert["mode"]}}" role="alert">
+	  {{alert["message"]}}
 	  </div>
 	  % end
 
