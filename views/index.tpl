@@ -31,7 +31,8 @@
 		  <li class="list-group-item">
 		    {{paper}}<br>
 			<a href="/paper/pdf/{{paper}}.pdf" class="btn btn-primary">View PDF</a>
-			<button type="button" class="btn btn-success">Memo</button>
+			<button type="button" class="btn btn-info">View Memo</button>
+			<button type="button" class="btn btn-success">Edit Memo</button>
 			<button type="button" class="btn btn-danger">Delete</button>
 		  </li>
 		  % end
