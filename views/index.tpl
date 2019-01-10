@@ -10,28 +10,24 @@
   </head>
 
   <body>
-	<div class="container-fluid">
 	  <h1>Penper</h1>
-	  <form method="post" action="/upload" enctype="multipart/form-data">
-	  File:
-	  <input type="file" name="paper">
-	  <input type="text" name="title">
+	  <a href="/upload" class="btn btn-primary">Upload</a>
 
-	  <button type="submit" class="btn btn-primary">Upload</button>
-	  </form>
 	  % if alert!=None:
 	  <div class="alert alert-{{alert["mode"]}}" role="alert">
 	  {{alert["message"]}}
 	  </div>
 	  % end
-
 	  <div class="card">
 		<div class="card-header">Contents</div>
 		<ul class="list-group list-group-flush">
 		  % for paper in papers:
 		  <li class="list-group-item">
-		    {{paper}}<br>
-			<a href="/paper/pdf/{{paper}}.pdf" class="btn btn-primary">View PDF</a>
+		    {{paper[0]}}<br>
+		    {{paper[1]}}<br>
+		    {{paper[2]}}<br>
+		    {{paper[3]}}<br>
+			<a href="/paper/pdf/{{paper[0]}}.pdf" class="btn btn-primary">View PDF</a>
 			<button type="button" class="btn btn-info">View Memo</button>
 			<button type="button" class="btn btn-success">Edit Memo</button>
 			<button type="button" class="btn btn-danger">Delete</button>

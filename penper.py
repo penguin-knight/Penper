@@ -16,14 +16,22 @@ PORTNUM = config["web"]["port_num"]
 db_path = 'DB/penper.db'
 
 con = sqlite3.connect(db_path)
-cursor = con.cursor
+cursor = con.cursor()
 
-# debug
-papers = ["dummy1", "dummy2", "dummy3", "dummy4", "dummy5"]
+def save_db(paper_info):
+    cursor.execute("INSERT INTO penper(title, auther, note) VALUES(?,?,?)",
+            (paper_info['title'], paper_info['auther'], paper_info['note']))
+    con.commit()
+    cursor.execute("SELECT * FROM sqlite_sequence WHERE name = 'penper'")
+    num = cursor.fetchone()
+    return num[1]
 
-def get_save_path(title):
-    title = title + ".pdf"
-    return "paper/pdf/" + title
+def get_save_path(num):
+    return "paper/pdf/" + str(num) + ".pdf"
+
+def get_papers():
+    cursor.execute("SELECT * FROM penper")
+    return cursor.fetchall()
 
 @route("/static/css/<filename>")
 def css(filename):
@@ -38,30 +46,40 @@ def view_file(ext, filename):
     root = "paper/" + ext
     return static_file(filename, root=root)
 
-@post("/upload")
-def do_upload():
-    pdf_data = request.files.get('paper','')
-    title = request.forms.get('title','')
-    alert = {}
-    if not pdf_data or not title:
-        alert["message"] = "Please select PDF & input Title."
-        alert["mode"] = "danger"
-        return template("index", papers=papers, alert=alert)
+@route('/upload')
+def upload_page():
+    return template("upload", alert=None)
 
-    filename = pdf_data.raw_filename
+@route('/')
+def index():
+    papers = get_papers()
+    return template("index", papers=papers, alert=None)
+
+@post("/")
+def do_upload():
+    paper_info = {}
+    paper_info['pdf_data'] = request.files.get('paper','')
+    paper_info['title'] = request.forms.get('title','')
+    paper_info['auther'] = request.forms.get('auther','')
+    paper_info['note'] = request.forms.get('note','')
+    alert = {}
+    if not paper_info['pdf_data'] or not paper_info['title'] or not paper_info['auther'] or not paper_info['note']:
+        alert["message"] = "Please select PDF & input."
+        alert["mode"] = "danger"
+        return template("upload", alert=alert)
+
+    filename = paper_info['pdf_data'].raw_filename
     if not filename.lower().endswith(('.pdf')):
         alert["message"] = "File extension not allowed!"
         alert["mode"] = "danger"
     else:
-        save_path = get_save_path(title)
-        pdf_data.save(save_path)
+        num = save_db(paper_info)
+        save_path = get_save_path(num)
+        paper_info['pdf_data'].save(save_path)
         alert["message"] = "Success!"
         alert["mode"] = "primary"
+        papers = get_papers()
     return template("index", papers=papers, alert=alert)
-
-@route('/')
-def index():
-    return template("index", papers=papers, alert=None)
 
 if __name__ == '__main__':
     run(host=HOST, port=PORTNUM, debug=True, reloader=True)
