@@ -12,6 +12,11 @@
   <body>
 	<div class="container-fluid">
 	  <h1>Penper</h1>
+	  % if alert!=None:
+	  <div class="alert alert-{{alert["mode"]}}" role="alert">
+	  {{alert["message"]}}
+	  </div>
+	  % end
 	  <div class="row">
 	  <div class="col-6">
 	  <form method="post" action="/" enctype="multipart/form-data">
@@ -37,11 +42,8 @@
 
 	  <button type="submit" class="btn btn-primary">Upload</button>
 	  </form>
-	  % if alert!=None:
-	  <div class="alert alert-{{alert["mode"]}}" role="alert">
-	  {{alert["message"]}}
-	  </div>
-	  % end
+	  <br>
+	  <a href="/" class="btn btn-primary">Back</a>
 	  </div>
 	  </div>
 

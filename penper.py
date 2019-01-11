@@ -26,6 +26,10 @@ def save_db(paper_info):
     num = cursor.fetchone()
     return num[1]
 
+def delete_paper_from_db(id):
+    cursor.execute("DELETE FROM penper WHERE id=?", (id,))
+    con.commit()
+
 def get_save_path(num):
     return "paper/pdf/" + str(num) + ".pdf"
 
@@ -49,6 +53,12 @@ def view_file(ext, filename):
 @route('/upload')
 def upload_page():
     return template("upload", alert=None)
+
+@get('/delete')
+def delete_paper():
+    id = request.query.id
+    delete_paper_from_db(id)
+    redirect("/")
 
 @route('/')
 def index():

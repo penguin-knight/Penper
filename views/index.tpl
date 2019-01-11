@@ -30,12 +30,36 @@
 			<a href="/paper/pdf/{{paper[0]}}.pdf" class="btn btn-primary">View PDF</a>
 			<button type="button" class="btn btn-info">View Memo</button>
 			<button type="button" class="btn btn-success">Edit Memo</button>
-			<button type="button" class="btn btn-danger">Delete</button>
+			<button type="button" class="btn btn-danger" onclick="DeletePaper({{paper[0]}})">Delete</button>
 		  </li>
 		  % end
 		</ul>
 	  </div>
 	</div>
 
+	<div class="modal" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      <h5 class="modal-title" id="DeleteModalLable">Delete paper info</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+		  </div>
+	      <div class="modal-body">
+		  <div id="ModalBody"></div>
+	      </div>
+
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+	        <a href="#" id="DeletePaperId" class="btn btn-primary">Yes</a>
+	      </div>
+		</div>
+	  </div>
+	</div>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
+  <script type="text/javascript" src="/static/js/main.js"></script>
 </html>
